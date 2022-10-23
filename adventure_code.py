@@ -1,3 +1,6 @@
+import os
+from map import Map
+
 # map (world/location)
 size = 10
 
@@ -19,9 +22,7 @@ CHARS = [
     ' |-',
 ]
 
-height = 0
-width = 0
-world = []
+map = Map()
 
 x = 4
 y = 13
@@ -47,76 +48,41 @@ def move():
     global y
     global x
     result = input('which way would you like to move? (n/s/e/w): ')
-    if result == 'n' and can_i_move_north():
+    if result == 'n' and map.can_i_move_north(x, y):
         y = y - 1
         return 'you move forward.'
-    if result == 's' and can_i_move_south():
+    if result == 's' and map.can_i_move_south(x, y):
         y = y + 1
         return 'you move backward.'
-    if result == 'e' and can_i_move_east():
+    if result == 'e' and map.can_i_move_east(x, y):
         x = x + 1
         return 'you move to the right.'
-    if result == 'w' and can_i_move_west():
+    if result == 'w' and map.can_i_move_west(x, y):
         x = x - 1
         return 'you move to the left.'
 
     print("thats not a direction you can go.")
     return move()
 
-def make_map():
-    global width
-    global world
-    global height
-    world = ([
-        [ 0, 6, 2, 2, 2, 2, 2, 5, 0, 0 ],
-        [ 0, 1, 0, 0, 0, 0, 0, 1, 0, 0 ],
-        [ 0, 1, 0, 6, 2, 5, 0, 1, 0, 0 ],
-        [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 0 ],
-        [ 0, 1, 0, 1, 0, 1, 0, 3, 2, 5 ],
-        [ 0, 1, 0, 1, 0, 1, 0, 0, 0, 1 ],
-        [ 0, 1, 0, 1, 0, 3, 2, 5, 0, 1 ],
-        [ 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ],
-        [ 6, 4, 0, 3, 2, 5, 0, 1, 0, 1 ],
-        [ 1, 0, 0, 0, 0, 1, 0, 1, 0, 1 ],
-        [ 1, 0, 6, 5, 0, 1, 0, 1, 0, 1 ],
-        [ 1, 0, 1, 1, 0, 1, 0, 1, 0, 1 ],
-        [ 3, 2, 4, 1, 0, 1, 0, 1, 0, 1 ],
-        [ 0, 0, 0, 1, 0, 1, 0, 1, 0, 1 ],
-    ])
-    height = len(world)
-    width = len(world[0])
 
-def show_map():
-    print(f'{width} x {height} map')
-    for yy in range(height):
-        line = []
-        for xx in range(width):
-            symbol = CHARS[world[yy][xx]]
-            if yy == y and xx == x:
-                symbol = ' * '
-            line.append(symbol)
-        print(' '.join(line))
-    print('\n')
-
-def can_i_move(xx, yy):
-    print(xx, yy)
-    if xx >= 0 and xx < width and yy >= 0 and yy < height:
-        return world[yy][xx] == 0
-    else:
-        return False
-
-def can_i_move_north():
-    return can_i_move(x, y-1)
-
-def can_i_move_south():
-    return can_i_move(x, y+1)
-
-def can_i_move_east():
-    return can_i_move(x+1, y)
-
-def can_i_move_west():
-    return can_i_move(x-1, y)
-
+# def can_i_move(xx, yy):
+#     print(xx, yy)
+#     if xx >= 0 and xx < width and yy >= 0 and yy < height:
+#         return world[yy][xx] == 0
+#     else:
+#         return False
+#
+# def can_i_move_north():
+#     return can_i_move(x, y-1)
+#
+# def can_i_move_south():
+#     return can_i_move(x, y+1)
+#
+# def can_i_move_east():
+#     return can_i_move(x+1, y)
+#
+# def can_i_move_west():
+#     return can_i_move(x-1, y)
 
 # inventory system
 def list_items():
@@ -132,17 +98,18 @@ def use_item(item):
     print('used', item, 'from inventory.')
 
 # test code
-make_map()
-show_map()
+map.generate()
+map.show(x, y)
 
 #result = yn('do you like cake?')
 #print(result)
 
 #where()
 while True:
+    #os.system('clear')
     result = move()
     print(result)
-    show_map()
+    map.show(x, y)
 
 #list_items()
 #add_item('toilet')

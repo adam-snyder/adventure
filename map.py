@@ -36,17 +36,37 @@ class Map:
         self.height = len(self.grid)
         self.width = len(self.grid[0])
 
-    def show(self):
+    def show(self, x, y):
         print(f'{self.width} x {self.height} map')
         for yy in range(self.height):
             line = []
             for xx in range(self.width):
                 symbol = self.grid[yy][xx].draw()
-                # if yy == y and xx == x:
-                #     symbol = ' * '
+                if yy == y and xx == x:
+                    symbol = ' * '
                 line.append(symbol)
             print(' '.join(line))
         print('\n')
+
+
+    def can_i_move(self, x, y):
+        print(x, y)
+        if x >= 0 and x < self.width and y >= 0 and y < self.height:
+            return self.grid[y][x].code() == 0
+        else:
+            return False
+
+    def can_i_move_north(self, x, y):
+        return self.can_i_move(x, y - 1)
+
+    def can_i_move_south(self, x, y):
+        return self.can_i_move(x, y + 1)
+
+    def can_i_move_east(self, x, y):
+        return self.can_i_move(x + 1, y)
+
+    def can_i_move_west(self, x, y):
+        return self.can_i_move(x - 1, y)
 
 
 if __name__ == '__main__':
