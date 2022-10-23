@@ -19,12 +19,64 @@ class Block:
 
 
 class EmptyBlock(Block):
-    def __init__(self):
-        Block.__init__(self)
-
     def code(self):
         return 0
 
     def draw(self):
         return '   '
 
+
+class WallBlockH(Block):
+    def code(self):
+        return 1
+
+    def draw(self):
+        return ' | '
+
+
+class WallBlockV(Block):
+    def code(self):
+        return 2
+
+    def draw(self):
+        return '---'
+
+
+class WallBlockQ1(Block):
+    def code(self):
+        return 3
+
+    def draw(self):
+        return ' |-'
+
+
+class WallBlockQ2(Block):
+    def code(self):
+        return 4
+
+    def draw(self):
+        return '-| '
+
+
+class WallBlockQ3(Block):
+    def code(self):
+        return 5
+
+    def draw(self):
+        return '-| '
+
+
+class WallBlockQ4(Block):
+    def code(self):
+        return 6
+
+    def draw(self):
+        return ' |-'
+
+
+class ItemBlock(Block):
+    def code(self):
+        return 100
+
+    def draw(self):
+        return ' $ '
