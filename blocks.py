@@ -1,3 +1,20 @@
+def get_block_type(code):
+    if code == 0:
+        return EmptyBlock
+    elif code == 1:
+        return WallBlockH
+    elif code == 2:
+        return WallBlockV
+    elif code == 3:
+        return WallBlockQ1
+    elif code == 4:
+        return WallBlockQ2
+    elif code == 5:
+        return WallBlockQ3
+    elif code == 6:
+        return WallBlockQ4
+
+
 class Block:
     def __init__(self):
         pass
